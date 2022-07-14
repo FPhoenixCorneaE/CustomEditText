@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MainActivity">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="top"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PrefixEditText"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText
+                prefixColor="@{@android:color/holo_orange_dark}"
+                prefixText="@{&quot;$ &quot;}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="请输入金额"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="SuffixEditText"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText
+                suffixColor="@{@android:color/holo_red_dark}"
+                suffixText="@{&quot; 美元&quot;}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="请输入金额"
+                android:inputType="numberDecimal"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
