@@ -68,6 +68,39 @@
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="16sp"
                 tools:ignore="HardcodedText" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="EmojiDisableEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <com.google.android.material.switchmaterial.SwitchMaterial
+                    android:id="@+id/switchEmojiAble"
+                    android:layout_width="wrap_content"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end|center_vertical"
+                    android:checked="true"
+                    android:onCheckedChanged="@{(compoundButton, isChecked) -> etEmojiDisable.disableEmoji(isChecked)}" />
+            </FrameLayout>
+
+            <com.fphoenixcorneae.widget.edittext.emoji.EmojiDisableEditText
+                android:id="@+id/etEmojiDisable"
+                disableEmoji="@{switchEmojiAble.isChecked()}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:hint="disable emoji inputting"
+                android:inputType="text"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
         </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

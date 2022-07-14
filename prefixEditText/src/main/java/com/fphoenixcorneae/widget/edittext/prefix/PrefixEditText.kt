@@ -15,10 +15,11 @@ import androidx.appcompat.widget.AppCompatEditText
  * @desc：PrefixEditText
  * @date：2022/07/13 17:51
  */
-class PrefixEditText(
+class PrefixEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : AppCompatEditText(context, attrs), TextWatcher {
+    defStyleAttr: Int = android.R.attr.editTextStyle,
+) : AppCompatEditText(context, attrs, defStyleAttr), TextWatcher {
 
     /** 前缀 */
     var prefixText: String? = "￥"

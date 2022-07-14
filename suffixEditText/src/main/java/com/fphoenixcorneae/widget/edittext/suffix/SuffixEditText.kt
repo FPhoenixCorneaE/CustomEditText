@@ -15,10 +15,11 @@ import androidx.appcompat.widget.AppCompatEditText
  * @desc：SuffixEditText
  * @date：2022/07/13 17:14
  */
-class SuffixEditText(
+class SuffixEditText @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
-) : AppCompatEditText(context, attrs), TextWatcher {
+    defStyleAttr: Int = android.R.attr.editTextStyle,
+) : AppCompatEditText(context, attrs, defStyleAttr), TextWatcher {
 
     /** 后缀 */
     var suffixText: String? = "元"

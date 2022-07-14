@@ -16,3 +16,4 @@ rootProject.name = "CustomEditText"
 include ':app'
 include ':suffixEditText'
 include ':prefixEditText'
+include ':emojiDisableEditText'
