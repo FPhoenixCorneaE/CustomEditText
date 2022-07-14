@@ -7,3 +7,8 @@ fun setSuffix(view: SuffixEditText, text: String?, color: Int) {
     view.suffixText = text
     view.suffixColor = color
 }
+
+@BindingAdapter("onTextChanged")
+fun onTextChanged(view: SuffixEditText, onTextChanged: SuffixEditText.OnTextChanged) {
+    view.setOnTextChanged(onTextChanged)
+}

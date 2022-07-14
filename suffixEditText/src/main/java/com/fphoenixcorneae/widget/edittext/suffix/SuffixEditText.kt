@@ -27,18 +27,28 @@ class SuffixEditText(
     @ColorInt
     var suffixColor: Int = Color.BLACK
 
+    /** 文本更改侦听 */
+    private var mOnTextChanged: OnTextChanged? = null
+
     init {
         addTextChangedListener(this)
     }
 
     override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
     }
 
     override fun onTextChanged(text: CharSequence?, start: Int, lengthBefore: Int, lengthAfter: Int) {
-
     }
 
     override fun afterTextChanged(s: Editable?) {
+        mOnTextChanged?.let { it ->
+            if (suffixText.isNullOrBlank()) {
+                it.onTextChanged(s)
+            } else {
+                it.onTextChanged(s.toString().replace(suffixText!!, ""))
+            }
+        }
         if (suffixText.isNullOrBlank()) {
             return
         }
@@ -84,5 +94,13 @@ class SuffixEditText(
         } else {
             setSelection(selStart)
         }
+    }
+
+    fun setOnTextChanged(onTextChanged: OnTextChanged) {
+        mOnTextChanged = onTextChanged
+    }
+
+    interface OnTextChanged {
+        fun onTextChanged(text: CharSequence?)
     }
 }

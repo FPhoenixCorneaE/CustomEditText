@@ -27,6 +27,9 @@ class PrefixEditText(
     @ColorInt
     var prefixColor: Int = Color.RED
 
+    /** 文本更改侦听 */
+    private var mOnTextChanged: OnTextChanged? = null
+
     init {
         addTextChangedListener(this)
     }
@@ -39,6 +42,13 @@ class PrefixEditText(
     }
 
     override fun afterTextChanged(s: Editable?) {
+        mOnTextChanged?.let { it ->
+            if (prefixText.isNullOrBlank()) {
+                it.onTextChanged(s)
+            } else {
+                it.onTextChanged(s.toString().replace(prefixText!!, ""))
+            }
+        }
         if (prefixText.isNullOrBlank()) {
             return
         }
@@ -82,5 +92,14 @@ class PrefixEditText(
         if (text.toString().isNotEmpty()) {
             setSelection(text.toString().length)
         }
+    }
+
+
+    fun setOnTextChanged(onTextChanged: OnTextChanged) {
+        mOnTextChanged = onTextChanged
+    }
+
+    interface OnTextChanged {
+        fun onTextChanged(text: CharSequence?)
     }
 }

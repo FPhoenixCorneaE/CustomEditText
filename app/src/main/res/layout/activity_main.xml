@@ -4,6 +4,13 @@
 
     <data>
 
+        <variable
+            name="onPrefixTextChanged"
+            type="com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText.OnTextChanged" />
+
+        <variable
+            name="onSuffixTextChanged"
+            type="com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText.OnTextChanged" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,6 +34,8 @@
                 tools:ignore="HardcodedText" />
 
             <com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText
+                android:id="@+id/etPrefix"
+                onTextChanged="@{onPrefixTextChanged}"
                 prefixColor="@{@android:color/holo_orange_dark}"
                 prefixText="@{&quot;$ &quot;}"
                 android:layout_width="match_parent"
@@ -47,6 +56,8 @@
                 tools:ignore="HardcodedText" />
 
             <com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText
+                android:id="@+id/etSuffix"
+                onTextChanged="@{onSuffixTextChanged}"
                 suffixColor="@{@android:color/holo_red_dark}"
                 suffixText="@{&quot; 美元&quot;}"
                 android:layout_width="match_parent"
