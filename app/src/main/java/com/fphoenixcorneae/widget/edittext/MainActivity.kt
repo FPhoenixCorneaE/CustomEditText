@@ -26,6 +26,8 @@ class MainActivity : AppCompatActivity() {
                     Log.d("Suffix", "setOnTextChanged: $text")
                 }
             }
+            // 只允许输入汉字
+            regex = listOf("[\u4e00-\u9fa5]+")
         }
     }
 }
