@@ -4,6 +4,10 @@
 
     <data>
 
+        <import type="android.text.InputType" />
+
+        <import type="android.util.Log" />
+
         <variable
             name="onPrefixTextChanged"
             type="com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText.OnTextChanged" />
@@ -90,7 +94,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="24dp"
                     android:layout_gravity="end|center_vertical"
-                    android:checked="true"
+                    android:checked="false"
                     android:onCheckedChanged="@{(compoundButton, isChecked) -> etEmojiDisable.disableEmoji(isChecked)}" />
             </FrameLayout>
 
@@ -99,7 +103,7 @@
                 disableEmoji="@{switchEmojiAble.isChecked()}"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:hint="disable emoji inputting"
+                android:hint="@{switchEmojiAble.isChecked() ? &quot;enable emoji inputting&quot; : &quot;disable emoji inputting&quot;}"
                 android:inputType="text"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray"
@@ -120,6 +124,68 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:hint="请输入汉字、字母或数字"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <TextView
+                android:id="@+id/tvPwd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="PasswordEditText"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
+                android:id="@+id/etPassword"
+                clearIcon="@{@drawable/svg_ic_clear}"
+                clearIconSize="@{24f}"
+                clearIconTint="@{@android:color/holo_red_dark}"
+                clearIconVisible="@{true}"
+                iconMarginEnd="@{16f}"
+                iconPadding="@{8f}"
+                onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
+                onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
+                pwdHideIcon="@{@drawable/svg_ic_password_hide}"
+                pwdIconSize="@{24f}"
+                pwdIconTint="@{@android:color/holo_orange_dark}"
+                pwdIconVisible="@{true}"
+                pwdShowIcon="@{@drawable/svg_ic_password_show}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="#22dddddd"
+                android:hint="请输入密码"
+                android:inputType="@{InputType.TYPE_TEXT_VARIATION_PASSWORD}"
+                android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;PasswordEditText：&quot; + etPassword.getText().toString())}"
+                android:textColor="@android:color/black"
+                android:textColorHint="@android:color/darker_gray"
+                android:textSize="16sp"
+                tools:ignore="HardcodedText" />
+
+            <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
+                android:id="@+id/etPassword2"
+                clearIcon="@{@drawable/svg_ic_clear}"
+                clearIconSize="@{24f}"
+                clearIconTint="@{@android:color/holo_red_dark}"
+                clearIconVisible="@{true}"
+                iconMarginEnd="@{16f}"
+                iconPadding="@{8f}"
+                onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
+                onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
+                pwdHideIcon="@{@drawable/svg_ic_password_hide}"
+                pwdIconSize="@{24f}"
+                pwdIconTint="@{@android:color/holo_orange_dark}"
+                pwdIconVisible="@{true}"
+                pwdShowIcon="@{@drawable/svg_ic_password_show}"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="#22dddddd"
+                android:hint="请输入地址"
+                android:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;PasswordEditText：&quot; + s)}"
                 android:textColor="@android:color/black"
                 android:textColorHint="@android:color/darker_gray"
                 android:textSize="16sp"

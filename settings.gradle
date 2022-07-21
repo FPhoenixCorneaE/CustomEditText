@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven { url "https://jitpack.io" }
     }
 }
 rootProject.name = "CustomEditText"
@@ -18,3 +19,4 @@ include ':suffixEditText'
 include ':prefixEditText'
 include ':emojiDisableEditText'
 include ':regexEditText'
+include ':passwordEditText'
