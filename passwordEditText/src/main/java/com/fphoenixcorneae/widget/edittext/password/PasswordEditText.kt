@@ -37,28 +37,56 @@ class PasswordEditText @JvmOverloads constructor(
     /** 图标内边距 */
     private var mIconPadding = DEFAULT_ICON_PADDING
 
-    /** 清除图标 */
+    /** 清除图标可见性 */
     private var mClearIconVisible = true
+
+    /** 清除图标Drawable */
     private var mClearIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.svg_ic_clear)
+
+    /** 清除图标大小 */
     private var mClearIconSize: Float = DEFAULT_ICON_SIZE
+
+    /** 清除图标着色 */
     private var mClearIconTint = ColorStateList.valueOf(currentHintTextColor)
+
+    /** 清除图标点击监听 */
     private var mOnClear: (() -> Unit)? = null
 
-    /** 密码图标 */
+    /** 密码图标可见性 */
     private var mPwdIconVisible = true
+
+    /** 密码显示图标Drawable */
     private var mPwdShowIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.svg_ic_password_show)
+
+    /** 密码隐藏图标Drawable */
     private var mPwdHideIcon: Drawable? = ContextCompat.getDrawable(context, R.drawable.svg_ic_password_hide)
+
+    /** 密码图标大小 */
     private var mPwdIconSize = DEFAULT_ICON_SIZE
+
+    /** 密码图标着色 */
     private var mPwdIconTint = ColorStateList.valueOf(currentHintTextColor)
+
+    /** 密码掩码字符 */
+    private var mPwdMaskChar = DOT
+
+    /** 密码掩码字符间距 */
+    private var mPwdMaskCharSpacing = LETTER_SPACING_PASSWORD
+
+    /** 是否是密码输入类型 */
     private val mIsPwdInputType
         get() = inputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD
                 || inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD
                 || inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
                 || inputType == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
+
+    /** 密码是否是显示状态 */
     private var mIsPwdShow = false
 
     /** 是否拥有输入焦点 */
     private var mHasFocus = false
+
+    /** 焦点改变监听 */
     private var mOnFocusChanged: ((PasswordEditText, Boolean) -> Unit)? = null
 
     /** 单击监听 */
@@ -152,13 +180,16 @@ class PasswordEditText @JvmOverloads constructor(
         if (mIsPwdInputType) {
             // textVisiblePassword
             mIsPwdShow = inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-            transformationMethod = if (mIsPwdShow) {
-                HideReturnsTransformationMethod.getInstance()
+            if (mIsPwdShow) {
+                transformationMethod = HideReturnsTransformationMethod.getInstance()
+                letterSpacing = LETTER_SPACING_STANDARD
             } else {
-                PasswordTransformationMethod.getInstance()
+                transformationMethod = PasswordTransformationMethod.getInstance(char = mPwdMaskChar, forceChange = true)
+                letterSpacing = mPwdMaskCharSpacing
             }
         } else {
             transformationMethod = HideReturnsTransformationMethod.getInstance()
+            letterSpacing = LETTER_SPACING_STANDARD
         }
         setIconVisibility()
     }
@@ -168,10 +199,12 @@ class PasswordEditText @JvmOverloads constructor(
      */
     private fun togglePwdTransformationMethod() {
         mIsPwdShow = !mIsPwdShow
-        transformationMethod = if (mIsPwdShow) {
-            HideReturnsTransformationMethod.getInstance()
+        if (mIsPwdShow) {
+            transformationMethod = HideReturnsTransformationMethod.getInstance()
+            letterSpacing = LETTER_SPACING_STANDARD
         } else {
-            PasswordTransformationMethod.getInstance()
+            transformationMethod = PasswordTransformationMethod.getInstance(char = mPwdMaskChar, forceChange = true)
+            letterSpacing = mPwdMaskCharSpacing
         }
         setSelection(text.toString().length)
         setIconVisibility()
@@ -379,6 +412,23 @@ class PasswordEditText @JvmOverloads constructor(
     }
 
     /**
+     * 密码掩码字符
+     */
+    fun setPwdMaskChar(c: Char) = apply {
+        mPwdMaskChar = c
+        setPwdTransformationMethod()
+    }
+
+    /**
+     * 密码掩码字符间距
+     * @param spacing 0f - 标准字间距，>0f - 放大字间距
+     */
+    fun setPwdMaskCharSpacing(spacing: Float) = apply {
+        mPwdMaskCharSpacing = spacing
+        setPwdTransformationMethod()
+    }
+
+    /**
      * 焦点改变监听
      */
     fun setOnFocusChanged(onFocusChanged: (PasswordEditText, Boolean) -> Unit) = apply {
@@ -394,5 +444,12 @@ class PasswordEditText @JvmOverloads constructor(
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, Resources.getSystem().displayMetrics)
         private val DEFAULT_ICON_SIZE =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, Resources.getSystem().displayMetrics)
+        private const val DOT = '\u2022'
+
+        // 密码掩码字符间距
+        private const val LETTER_SPACING_PASSWORD = 0.2f
+
+        // 标准字符间距
+        private const val LETTER_SPACING_STANDARD = 0f
     }
 }
