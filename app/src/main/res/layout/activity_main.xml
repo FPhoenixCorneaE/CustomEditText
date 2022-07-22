@@ -155,6 +155,7 @@
                 pwdMaskChar="@{'*'}"
                 pwdMaskCharSpacing="@{.2f}"
                 pwdShowIcon="@{@drawable/svg_ic_password_show}"
+                textLetterSpacing="@{.5f}"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="#22dddddd"

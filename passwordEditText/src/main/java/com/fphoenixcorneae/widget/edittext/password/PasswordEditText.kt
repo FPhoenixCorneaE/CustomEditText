@@ -73,6 +73,9 @@ class PasswordEditText @JvmOverloads constructor(
     /** 密码掩码字符间距 */
     private var mPwdMaskCharSpacing = LETTER_SPACING_PASSWORD
 
+    /** 内容字符间距 */
+    private var mTextLetterSpacing = LETTER_SPACING_STANDARD
+
     /** 是否是密码输入类型 */
     private val mIsPwdInputType
         get() = inputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD
@@ -182,14 +185,14 @@ class PasswordEditText @JvmOverloads constructor(
             mIsPwdShow = inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
             if (mIsPwdShow) {
                 transformationMethod = HideReturnsTransformationMethod.getInstance()
-                letterSpacing = LETTER_SPACING_STANDARD
+                letterSpacing = mTextLetterSpacing
             } else {
                 transformationMethod = PasswordTransformationMethod.getInstance(char = mPwdMaskChar, forceChange = true)
                 letterSpacing = mPwdMaskCharSpacing
             }
         } else {
             transformationMethod = HideReturnsTransformationMethod.getInstance()
-            letterSpacing = LETTER_SPACING_STANDARD
+            letterSpacing = mTextLetterSpacing
         }
         setIconVisibility()
     }
@@ -201,7 +204,7 @@ class PasswordEditText @JvmOverloads constructor(
         mIsPwdShow = !mIsPwdShow
         if (mIsPwdShow) {
             transformationMethod = HideReturnsTransformationMethod.getInstance()
-            letterSpacing = LETTER_SPACING_STANDARD
+            letterSpacing = mTextLetterSpacing
         } else {
             transformationMethod = PasswordTransformationMethod.getInstance(char = mPwdMaskChar, forceChange = true)
             letterSpacing = mPwdMaskCharSpacing
@@ -425,6 +428,15 @@ class PasswordEditText @JvmOverloads constructor(
      */
     fun setPwdMaskCharSpacing(spacing: Float) = apply {
         mPwdMaskCharSpacing = spacing
+        setPwdTransformationMethod()
+    }
+
+    /**
+     * 内容字符间距
+     * @param spacing 0f - 标准字间距，>0f - 放大字间距
+     */
+    fun setTextLetterSpacing(spacing: Float) = apply {
+        mTextLetterSpacing = spacing
         setPwdTransformationMethod()
     }
 

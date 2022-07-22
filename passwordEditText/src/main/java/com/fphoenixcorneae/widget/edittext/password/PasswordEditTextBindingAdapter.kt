@@ -21,13 +21,14 @@ import androidx.databinding.BindingAdapter
  * @param pwdIconTint        密码显示/隐藏图标着色, [ColorInt]
  * @param pwdMaskChar        密码掩码字符, 默认是DOT('\u2022')
  * @param pwdMaskCharSpacing 密码掩码字符间距, 0f - 标准字间距，>0f - 放大字间距
+ * @param textLetterSpacing  内容字符间距, 0f - 标准字间距，>0f - 放大字间距
  * @param onFocusChanged     焦点改变监听
  * @param inputType          输入类型, [InputType]
  */
 @BindingAdapter(value = [
     "iconMarginEnd", "iconPadding", "clearIconVisible", "clearIcon", "clearIconSize", "clearIconTint", "onClear",
     "pwdIconVisible", "pwdShowIcon", "pwdHideIcon", "pwdIconSize", "pwdIconTint", "pwdMaskChar", "pwdMaskCharSpacing",
-    "onFocusChanged", "android:inputType",
+    "textLetterSpacing", "onFocusChanged", "android:inputType",
 ], requireAll = false)
 fun setPasswordEditTextAttrs(
     view: PasswordEditText,
@@ -45,6 +46,7 @@ fun setPasswordEditTextAttrs(
     @ColorInt pwdIconTint: Int?,
     pwdMaskChar: Char?,
     pwdMaskCharSpacing: Float?,
+    textLetterSpacing: Float?,
     onFocusChanged: View.OnFocusChangeListener?,
     inputType: Int?,
 ) {
@@ -62,6 +64,7 @@ fun setPasswordEditTextAttrs(
     pwdIconTint?.let { view.setPwdIconTint(it) }
     pwdMaskChar?.let { view.setPwdMaskChar(it) }
     pwdMaskCharSpacing?.let { view.setPwdMaskCharSpacing(it) }
+    textLetterSpacing?.let { view.setTextLetterSpacing(it) }
     onFocusChanged?.let { view.setOnFocusChanged { passwordEditText, b -> it.onFocusChange(passwordEditText, b) } }
     inputType?.let { view.inputType = it }
 }
