@@ -7,28 +7,33 @@ import androidx.annotation.ColorInt
 import androidx.databinding.BindingAdapter
 
 /**
- * @param iconMarginEnd      图标外边距, dp value
- * @param iconPadding        图标内边距, dp value
- * @param clearIconVisible   清除图标可见性
- * @param clearIcon          清除图标, Drawable
- * @param clearIconSize      清除图标大小, dp value
- * @param clearIconTint      清除图标着色, [ColorInt]
- * @param onClear            清除输入内容监听
- * @param pwdIconVisible     密码显示/隐藏图标可见性
- * @param pwdShowIcon        密码显示图标, Drawable
- * @param pwdHideIcon        密码隐藏图标, Drawable
- * @param pwdIconSize        密码显示/隐藏图标大小, dp value
- * @param pwdIconTint        密码显示/隐藏图标着色, [ColorInt]
- * @param pwdMaskChar        密码掩码字符, 默认是DOT('\u2022')
- * @param pwdMaskCharSpacing 密码掩码字符间距, 0f - 标准字间距，>0f - 放大字间距
- * @param textLetterSpacing  内容字符间距, 0f - 标准字间距，>0f - 放大字间距
- * @param onFocusChanged     焦点改变监听
- * @param inputType          输入类型, [InputType]
+ * @param iconMarginEnd       图标外边距, dp value
+ * @param iconPadding         图标内边距, dp value
+ * @param clearIconVisible    清除图标可见性
+ * @param clearIcon           清除图标, Drawable
+ * @param clearIconSize       清除图标大小, dp value
+ * @param clearIconTint       清除图标着色, [ColorInt]
+ * @param onClear             清除输入内容监听
+ * @param pwdIconVisible      密码显示/隐藏图标可见性
+ * @param pwdShowIcon         密码显示图标, Drawable
+ * @param pwdHideIcon         密码隐藏图标, Drawable
+ * @param pwdIconSize         密码显示/隐藏图标大小, dp value
+ * @param pwdIconTint         密码显示/隐藏图标着色, [ColorInt]
+ * @param pwdMaskChar         密码掩码字符, 默认是DOT('\u2022')
+ * @param pwdMaskCharSpacing  密码掩码字符间距, 0f - 标准字间距，>0f - 放大字间距
+ * @param textLetterSpacing   内容字符间距, 0f - 标准字间距，>0f - 放大字间距
+ * @param onFocusChanged      焦点改变监听
+ * @param inputType           输入类型, [InputType]
+ * @param prefixIcon          前缀图标, Drawable
+ * @param prefixIconSize      前缀图标大小, dp value
+ * @param prefixIconTint      前缀图标着色, [ColorInt]
+ * @param prefixIconFocusTint 前缀图标着色, [ColorInt]
  */
 @BindingAdapter(value = [
     "iconMarginEnd", "iconPadding", "clearIconVisible", "clearIcon", "clearIconSize", "clearIconTint", "onClear",
     "pwdIconVisible", "pwdShowIcon", "pwdHideIcon", "pwdIconSize", "pwdIconTint", "pwdMaskChar", "pwdMaskCharSpacing",
-    "textLetterSpacing", "onFocusChanged", "android:inputType",
+    "textLetterSpacing", "onFocusChanged", "android:inputType", "prefixIcon", "prefixIconSize", "prefixIconTint",
+    "prefixIconFocusTint",
 ], requireAll = false)
 fun setPasswordEditTextAttrs(
     view: PasswordEditText,
@@ -49,6 +54,10 @@ fun setPasswordEditTextAttrs(
     textLetterSpacing: Float?,
     onFocusChanged: View.OnFocusChangeListener?,
     inputType: Int?,
+    prefixIcon: Drawable?,
+    prefixIconSize: Float?,
+    @ColorInt prefixIconTint: Int?,
+    @ColorInt prefixIconFocusTint: Int?,
 ) {
     iconMarginEnd?.let { view.setIconMarginEnd(it) }
     iconPadding?.let { view.setIconPadding(it) }
@@ -67,4 +76,8 @@ fun setPasswordEditTextAttrs(
     textLetterSpacing?.let { view.setTextLetterSpacing(it) }
     onFocusChanged?.let { view.setOnFocusChanged { passwordEditText, b -> it.onFocusChange(passwordEditText, b) } }
     inputType?.let { view.inputType = it }
+    prefixIcon?.let { view.setPrefixIcon(it) }
+    prefixIconSize?.let { view.setPrefixIconSize(it) }
+    prefixIconTint?.let { view.setPrefixIconTint(it) }
+    prefixIconFocusTint?.let { view.setPrefixIconFocusTint(it) }
 }

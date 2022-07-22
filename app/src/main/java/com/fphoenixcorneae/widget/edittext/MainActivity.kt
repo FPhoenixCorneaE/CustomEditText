@@ -3,6 +3,7 @@ package com.fphoenixcorneae.widget.edittext
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.fphoenixcorneae.widget.edittext.databinding.ActivityMainBinding
 import com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText
 import com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText

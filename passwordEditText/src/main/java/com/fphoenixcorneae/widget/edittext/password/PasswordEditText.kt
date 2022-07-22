@@ -31,6 +31,22 @@ class PasswordEditText @JvmOverloads constructor(
     defStyleAttr: Int = android.R.attr.editTextStyle,
 ) : AppCompatEditText(context, attrs, defStyleAttr) {
 
+    /** 是否是密码输入类型 */
+    private val mIsPwdInputType
+        get() = inputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                || inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD
+                || inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
+                || inputType == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
+
+    /** 密码是否是显示状态 */
+    private var mIsPwdShow = false
+
+    /** 是否拥有输入焦点 */
+    private var mHasFocus = false
+
+    /** 单击监听 */
+    private val mGestureDetector by lazy { GestureDetector(context, OnSingleTapConfirmedListener()) }
+
     /** 图标外边距 */
     private var mIconMarginEnd = DEFAULT_ICON_MARGIN_END
 
@@ -76,24 +92,14 @@ class PasswordEditText @JvmOverloads constructor(
     /** 内容字符间距 */
     private var mTextLetterSpacing = LETTER_SPACING_STANDARD
 
-    /** 是否是密码输入类型 */
-    private val mIsPwdInputType
-        get() = inputType == InputType.TYPE_NUMBER_VARIATION_PASSWORD
-                || inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD
-                || inputType == InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD
-                || inputType == InputType.TYPE_TEXT_VARIATION_WEB_PASSWORD
-
-    /** 密码是否是显示状态 */
-    private var mIsPwdShow = false
-
-    /** 是否拥有输入焦点 */
-    private var mHasFocus = false
-
     /** 焦点改变监听 */
     private var mOnFocusChanged: ((PasswordEditText, Boolean) -> Unit)? = null
 
-    /** 单击监听 */
-    private val mGestureDetector by lazy { GestureDetector(context, OnSingleTapConfirmedListener()) }
+    /** 前缀图标Drawable */
+    private var mPrefixIcon: Drawable? = null
+    private var mPrefixIconSize = DEFAULT_ICON_SIZE
+    private var mPrefixIconTint = ColorStateList.valueOf(currentHintTextColor)
+    private var mPrefixIconFocusTint = ColorStateList.valueOf(currentHintTextColor)
 
     init {
         setOnFocusChangeListener { _, b ->
@@ -123,6 +129,13 @@ class PasswordEditText @JvmOverloads constructor(
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
+        if (getPrefixIcon() != null) {
+            // 绘制前缀图标
+            val start = 0
+            val top = (height - mPrefixIconSize).roundToInt().shr(1)
+            // When the inputted content is too long, getScrollX()/getScrollY() can fix the offset.
+            canvas?.drawBitmap(getPrefixIcon()!!, start.toFloat(), (top + scrollY).toFloat(), null)
+        }
         if (!mHasFocus) {
             return
         }
@@ -255,6 +268,15 @@ class PasswordEditText @JvmOverloads constructor(
     }?.toBitmap(mPwdIconSize.roundToInt(), mPwdIconSize.roundToInt())
 
     /**
+     * 获取着色的前缀图标图片
+     */
+    private fun getPrefixIcon() = mPrefixIcon?.apply {
+        DrawableCompat.wrap(this).mutate().also {
+            DrawableCompat.setTintList(it, if (mHasFocus) mPrefixIconFocusTint else mPrefixIconTint)
+        }
+    }?.toBitmap(mPrefixIconSize.roundToInt(), mPrefixIconSize.roundToInt())
+
+    /**
      * @desc：单击监听
      * @date：2022/07/21 15:56
      */
@@ -347,6 +369,7 @@ class PasswordEditText @JvmOverloads constructor(
 
     /**
      * 设置清除图标大小
+     * @param size dp value
      */
     fun setClearIconSize(size: Float) = apply {
         mClearIconSize =
@@ -398,6 +421,7 @@ class PasswordEditText @JvmOverloads constructor(
 
     /**
      * 设置密码显示/隐藏图标大小
+     * @param size dp value
      */
     fun setPwdIconSize(size: Float) = apply {
         mPwdIconSize =
@@ -445,6 +469,40 @@ class PasswordEditText @JvmOverloads constructor(
      */
     fun setOnFocusChanged(onFocusChanged: (PasswordEditText, Boolean) -> Unit) = apply {
         mOnFocusChanged = onFocusChanged
+    }
+
+    /**
+     * 设置前缀图标Drawable
+     */
+    fun setPrefixIcon(d: Drawable) = apply {
+        mPrefixIcon = d
+        invalidate()
+    }
+
+    /**
+     * 设置前缀图标大小
+     * @param size dp value
+     */
+    fun setPrefixIconSize(size: Float) = apply {
+        mPrefixIconSize =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, size, Resources.getSystem().displayMetrics)
+        invalidate()
+    }
+
+    /**
+     * 前缀图标着色
+     */
+    fun setPrefixIconTint(@ColorInt tint: Int) = apply {
+        mPrefixIconTint = ColorStateList.valueOf(tint)
+        invalidate()
+    }
+
+    /**
+     * 前缀图标着色
+     */
+    fun setPrefixIconFocusTint(@ColorInt tint: Int) = apply {
+        mPrefixIconFocusTint = ColorStateList.valueOf(tint)
+        invalidate()
     }
 
     // ========================================public api end===========================================================
