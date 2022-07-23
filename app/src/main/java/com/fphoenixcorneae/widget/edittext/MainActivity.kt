@@ -29,6 +29,12 @@ class MainActivity : AppCompatActivity() {
             }
             // 只允许输入汉字
             regex = listOf("[\u4e00-\u9fa5]+")
+            btnPhoneNumber.setOnClickListener {
+                etSeparatorPhoneNumber.setText(btnPhoneNumber.text.toString())
+            }
+            btnBankCard.setOnClickListener {
+                etSeparatorBankCard.setText(btnBankCard.text.toString())
+            }
         }
     }
 }

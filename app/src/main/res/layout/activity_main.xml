@@ -21,229 +21,241 @@
             type="java.util.List&lt;String&gt;" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="top"
-            android:orientation="vertical"
-            android:padding="16dp">
+            android:layout_height="wrap_content">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PrefixEditText"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText
-                android:id="@+id/etPrefix"
-                onTextChanged="@{onPrefixTextChanged}"
-                prefixColor="@{@android:color/holo_orange_dark}"
-                prefixText="@{&quot;$ &quot;}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="请输入金额"
-                android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SuffixEditText"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText
-                android:id="@+id/etSuffix"
-                onTextChanged="@{onSuffixTextChanged}"
-                suffixColor="@{@android:color/holo_red_dark}"
-                suffixText="@{&quot; 美元&quot;}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="请输入金额"
-                android:inputType="numberDecimal"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent"
+                android:gravity="top"
+                android:orientation="vertical"
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="EmojiDisableEditText"
+                    android:text="PrefixEditText"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
 
-                <com.google.android.material.switchmaterial.SwitchMaterial
-                    android:id="@+id/switchEmojiAble"
-                    android:layout_width="wrap_content"
-                    android:layout_height="24dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:checked="false"
-                    android:onCheckedChanged="@{(compoundButton, isChecked) -> etEmojiDisable.disableEmoji(isChecked)}" />
-            </FrameLayout>
+                <com.fphoenixcorneae.widget.edittext.prefix.PrefixEditText
+                    android:id="@+id/etPrefix"
+                    onTextChanged="@{onPrefixTextChanged}"
+                    prefixColor="@{@android:color/holo_orange_dark}"
+                    prefixText="@{&quot;$ &quot;}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="请输入金额"
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-            <com.fphoenixcorneae.widget.edittext.emoji.EmojiDisableEditText
-                android:id="@+id/etEmojiDisable"
-                disableEmoji="@{switchEmojiAble.isChecked()}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="@{switchEmojiAble.isChecked() ? &quot;disable emoji inputting&quot; : &quot;enable emoji inputting&quot;}"
-                android:inputType="text"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SuffixEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="RegexEditText"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <com.fphoenixcorneae.widget.edittext.suffix.SuffixEditText
+                    android:id="@+id/etSuffix"
+                    onTextChanged="@{onSuffixTextChanged}"
+                    suffixColor="@{@android:color/holo_red_dark}"
+                    suffixText="@{&quot; 美元&quot;}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="请输入金额"
+                    android:inputType="numberDecimal"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-            <com.fphoenixcorneae.widget.edittext.regex.RegexEditText
-                android:id="@+id/etRegex"
-                regex="@{regex}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:hint="请输入汉字、字母或数字"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tvPwd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PasswordEditText"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="EmojiDisableEditText"
+                        android:textColor="@android:color/black"
+                        android:textSize="16sp"
+                        tools:ignore="HardcodedText" />
 
-            <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
-                android:id="@+id/etAccount"
-                clearIcon="@{@drawable/svg_ic_clear}"
-                clearIconSize="@{24f}"
-                clearIconTint="@{@android:color/holo_red_dark}"
-                clearIconVisible="@{true}"
-                cursorColor="@{@android:color/holo_red_dark}"
-                iconMarginEnd="@{16f}"
-                iconPadding="@{8f}"
-                onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
-                onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
-                prefixIcon="@{@drawable/svg_ic_account}"
-                prefixIconFocusTint="@{@android:color/holo_orange_dark}"
-                prefixIconSize="@{20f}"
-                prefixIconTint="@{@android:color/darker_gray}"
-                pwdHideIcon="@{@drawable/svg_ic_password_hide}"
-                pwdIconSize="@{24f}"
-                pwdIconTint="@{@android:color/holo_orange_dark}"
-                pwdIconVisible="@{true}"
-                pwdShowIcon="@{@drawable/svg_ic_password_show}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:background="#22dddddd"
-                android:hint="请输入账号"
-                android:inputType="@{InputType.TYPE_CLASS_TEXT}"
-                android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;Account：&quot; + s)}"
-                android:paddingStart="28dp"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                    <com.google.android.material.switchmaterial.SwitchMaterial
+                        android:id="@+id/switchEmojiAble"
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:layout_gravity="end|center_vertical"
+                        android:checked="false"
+                        android:onCheckedChanged="@{(compoundButton, isChecked) -> etEmojiDisable.disableEmoji(isChecked)}" />
+                </FrameLayout>
 
-            <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
-                android:id="@+id/etPassword"
-                clearIcon="@{@drawable/svg_ic_clear}"
-                clearIconSize="@{24f}"
-                clearIconTint="@{@android:color/holo_red_dark}"
-                clearIconVisible="@{true}"
-                cursorColor="@{@android:color/holo_orange_dark}"
-                iconMarginEnd="@{16f}"
-                iconPadding="@{8f}"
-                onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
-                onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
-                prefixIcon="@{@drawable/svg_ic_password}"
-                prefixIconFocusTint="@{@android:color/holo_orange_dark}"
-                prefixIconSize="@{20f}"
-                prefixIconTint="@{@android:color/darker_gray}"
-                pwdHideIcon="@{@drawable/svg_ic_password_hide}"
-                pwdIconSize="@{20f}"
-                pwdIconTint="@{@android:color/holo_orange_dark}"
-                pwdIconVisible="@{true}"
-                pwdMaskChar="@{'*'}"
-                pwdMaskCharSpacing="@{.2f}"
-                pwdShowIcon="@{@drawable/svg_ic_password_show}"
-                textLetterSpacing="@{.5f}"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginTop="8dp"
-                android:background="#22dddddd"
-                android:hint="请输入密码"
-                android:inputType="@{InputType.TYPE_TEXT_VARIATION_PASSWORD}"
-                android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;Password：&quot; + etPassword.getText().toString())}"
-                android:paddingStart="28dp"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText,RtlSymmetry" />
+                <com.fphoenixcorneae.widget.edittext.emoji.EmojiDisableEditText
+                    android:id="@+id/etEmojiDisable"
+                    disableEmoji="@{switchEmojiAble.isChecked()}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@{switchEmojiAble.isChecked() ? &quot;disable emoji inputting&quot; : &quot;enable emoji inputting&quot;}"
+                    android:inputType="text"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="SeparatorEditText"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="RegexEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                <com.fphoenixcorneae.widget.edittext.regex.RegexEditText
+                    android:id="@+id/etRegex"
+                    regex="@{regex}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="请输入汉字、字母或数字"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/tvPwd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PasswordEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
+                    android:id="@+id/etAccount"
+                    clearIcon="@{@drawable/svg_ic_clear}"
+                    clearIconSize="@{24f}"
+                    clearIconTint="@{@android:color/holo_red_dark}"
+                    clearIconVisible="@{true}"
+                    cursorColor="@{@android:color/holo_red_dark}"
+                    iconMarginEnd="@{16f}"
+                    iconPadding="@{8f}"
+                    onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
+                    onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
+                    prefixIcon="@{@drawable/svg_ic_account}"
+                    prefixIconFocusTint="@{@android:color/holo_orange_dark}"
+                    prefixIconSize="@{20f}"
+                    prefixIconTint="@{@android:color/darker_gray}"
+                    pwdHideIcon="@{@drawable/svg_ic_password_hide}"
+                    pwdIconSize="@{24f}"
+                    pwdIconTint="@{@android:color/holo_orange_dark}"
+                    pwdIconVisible="@{true}"
+                    pwdShowIcon="@{@drawable/svg_ic_password_show}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#22dddddd"
+                    android:hint="请输入账号"
+                    android:inputType="@{InputType.TYPE_CLASS_TEXT}"
+                    android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;Account：&quot; + s)}"
+                    android:paddingStart="28dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+
+                <com.fphoenixcorneae.widget.edittext.password.PasswordEditText
+                    android:id="@+id/etPassword"
+                    clearIcon="@{@drawable/svg_ic_clear}"
+                    clearIconSize="@{24f}"
+                    clearIconTint="@{@android:color/holo_red_dark}"
+                    clearIconVisible="@{true}"
+                    cursorColor="@{@android:color/holo_orange_dark}"
+                    iconMarginEnd="@{16f}"
+                    iconPadding="@{8f}"
+                    onClear="@{() -> Log.d(&quot;PasswordEditText&quot;, &quot;click clear icon!&quot;)}"
+                    onFocusChanged="@{(v, b) -> Log.d(&quot;PasswordEditText&quot;, &quot;click focus changed: &quot; + b)}"
+                    prefixIcon="@{@drawable/svg_ic_password}"
+                    prefixIconFocusTint="@{@android:color/holo_orange_dark}"
+                    prefixIconSize="@{20f}"
+                    prefixIconTint="@{@android:color/darker_gray}"
+                    pwdHideIcon="@{@drawable/svg_ic_password_hide}"
+                    pwdIconSize="@{20f}"
+                    pwdIconTint="@{@android:color/holo_orange_dark}"
+                    pwdIconVisible="@{true}"
+                    pwdMaskChar="@{'*'}"
+                    pwdMaskCharSpacing="@{.2f}"
+                    pwdShowIcon="@{@drawable/svg_ic_password_show}"
+                    textLetterSpacing="@{.5f}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="#22dddddd"
+                    android:hint="请输入密码"
+                    android:inputType="@{InputType.TYPE_TEXT_VARIATION_PASSWORD}"
+                    android:onTextChanged="@{(s, start, before, count) -> tvPwd.setText(&quot;Password：&quot; + etPassword.getText().toString())}"
+                    android:paddingStart="28dp"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText,RtlSymmetry" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="SeparatorEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
 
                 <Button
+                    android:id="@+id/btnPhoneNumber"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="13888888888"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
+                    tools:ignore="ButtonStyle,HardcodedText" />
+
+                <com.fphoenixcorneae.widget.edittext.separator.SeparatorEditText
+                    android:id="@+id/etSeparatorPhoneNumber"
+                    textPattern="@{&quot;3, 4, 4&quot;}"
+                    textSeparator="@{&quot;-&quot;}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
                     tools:ignore="HardcodedText" />
 
                 <Button
+                    android:id="@+id/btnBankCard"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="13888888888"
+                    android:text="6227002470170278192"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="ButtonStyle,HardcodedText" />
+
+                <com.fphoenixcorneae.widget.edittext.separator.SeparatorEditText
+                    android:id="@+id/etSeparatorBankCard"
+                    textPattern="@{&quot;4, 4, 4, 4, 3&quot;}"
+                    textSeparator="@{&quot; &quot;}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
-
-            <com.fphoenixcorneae.widget.edittext.separator.SeparatorEditText
-                android:id="@+id/etSeparator"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:text="13888888888"
-                android:textColor="@android:color/black"
-                android:textSize="16sp"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
