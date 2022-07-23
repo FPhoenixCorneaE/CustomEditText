@@ -5,13 +5,18 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
 import android.graphics.Canvas
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
+import android.os.Build
 import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.GestureDetector
 import android.view.MotionEvent
+import android.widget.TextView
 import androidx.annotation.ColorInt
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.content.ContextCompat
@@ -505,6 +510,39 @@ class PasswordEditText @JvmOverloads constructor(
         invalidate()
     }
 
+    /**
+     * 设置光标颜色
+     */
+    @SuppressLint("SoonBlockedPrivateApi", "DiscouragedPrivateApi")
+    fun setCursorColor(@ColorInt color: Int) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            textCursorDrawable = GradientDrawable().apply {
+                setColor(color)
+                setSize(DEFAULT_CURSOR_WIDTH.roundToInt(), 1)
+            }
+        } else {
+            runCatching {
+                val mCursorDrawableRes = TextView::class.java.getDeclaredField("mCursorDrawableRes").run {
+                    isAccessible = true
+                    getInt(this@PasswordEditText)
+                }
+                val mEditor = TextView::class.java.getDeclaredField("mEditor").run {
+                    isAccessible = true
+                    get(this@PasswordEditText)
+                }
+                val mCursorDrawable = mEditor.javaClass.getDeclaredField("mCursorDrawable")
+                mCursorDrawable.isAccessible = true
+                arrayOf(ContextCompat.getDrawable(context, mCursorDrawableRes)?.apply {
+                    colorFilter = PorterDuffColorFilter(color, PorterDuff.Mode.SRC_IN)
+                }).also {
+                    mCursorDrawable.set(mEditor, it)
+                }
+            }.onFailure {
+                it.printStackTrace()
+            }
+        }
+    }
+
     // ========================================public api end===========================================================
 
     companion object {
@@ -514,6 +552,9 @@ class PasswordEditText @JvmOverloads constructor(
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 8f, Resources.getSystem().displayMetrics)
         private val DEFAULT_ICON_SIZE =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, Resources.getSystem().displayMetrics)
+        private val DEFAULT_CURSOR_WIDTH =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics)
+
         private const val DOT = '\u2022'
 
         // 密码掩码字符间距

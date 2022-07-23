@@ -28,12 +28,13 @@ import androidx.databinding.BindingAdapter
  * @param prefixIconSize      前缀图标大小, dp value
  * @param prefixIconTint      前缀图标着色, [ColorInt]
  * @param prefixIconFocusTint 前缀图标着色, [ColorInt]
+ * @param cursorColor         光标颜色, [ColorInt]
  */
 @BindingAdapter(value = [
     "iconMarginEnd", "iconPadding", "clearIconVisible", "clearIcon", "clearIconSize", "clearIconTint", "onClear",
     "pwdIconVisible", "pwdShowIcon", "pwdHideIcon", "pwdIconSize", "pwdIconTint", "pwdMaskChar", "pwdMaskCharSpacing",
     "textLetterSpacing", "onFocusChanged", "android:inputType", "prefixIcon", "prefixIconSize", "prefixIconTint",
-    "prefixIconFocusTint",
+    "prefixIconFocusTint", "cursorColor",
 ], requireAll = false)
 fun setPasswordEditTextAttrs(
     view: PasswordEditText,
@@ -58,6 +59,7 @@ fun setPasswordEditTextAttrs(
     prefixIconSize: Float?,
     @ColorInt prefixIconTint: Int?,
     @ColorInt prefixIconFocusTint: Int?,
+    @ColorInt cursorColor: Int?,
 ) {
     iconMarginEnd?.let { view.setIconMarginEnd(it) }
     iconPadding?.let { view.setIconPadding(it) }
@@ -80,4 +82,5 @@ fun setPasswordEditTextAttrs(
     prefixIconSize?.let { view.setPrefixIconSize(it) }
     prefixIconTint?.let { view.setPrefixIconTint(it) }
     prefixIconFocusTint?.let { view.setPrefixIconFocusTint(it) }
+    cursorColor?.let { view.setCursorColor(it) }
 }

@@ -6,7 +6,7 @@ import androidx.databinding.BindingAdapter
  * @param textSeparator 分隔符
  * @param textPattern   分隔样式
  */
-@BindingAdapter(value = ["textSeparator"], requireAll = false)
+@BindingAdapter(value = ["textSeparator", "textPattern"], requireAll = false)
 fun setSeparatorEditTextAttrs(
     view: SeparatorEditText,
     textSeparator: String?,
