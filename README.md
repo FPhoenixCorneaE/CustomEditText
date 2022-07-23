@@ -11,3 +11,5 @@
 
 * ##### PasswordEditText：密码输入框, 可切换显示/隐藏状态, 可清除
 
+* ##### SeparatorEditText：添加分隔符
+
