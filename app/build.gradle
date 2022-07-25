@@ -4,6 +4,9 @@ plugins {
     id 'kotlin-kapt'
 }
 
+def projectVersionCode = 1
+def projectVersionName = "1.0.0"
+
 android {
     compileSdk 32
 
@@ -11,8 +14,8 @@ android {
         applicationId "com.fphoenixcorneae.widget.edittext"
         minSdk 21
         targetSdk 32
-        versionCode 1
-        versionName "1.0.0"
+        versionCode projectVersionCode
+        versionName projectVersionName
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,12 +48,18 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation project(path: ':suffixEditText')
-    implementation project(path: ':prefixEditText')
-    implementation project(path: ':emojiDisableEditText')
-    implementation project(path: ':regexEditText')
-    implementation project(path: ':passwordEditText')
-    implementation project(path: ':separatorEditText')
+//    implementation project(path: ':suffixEditText')
+//    implementation project(path: ':prefixEditText')
+//    implementation project(path: ':emojiDisableEditText')
+//    implementation project(path: ':regexEditText')
+//    implementation project(path: ':passwordEditText')
+//    implementation project(path: ':separatorEditText')
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:separatorEditText:$projectVersionName")
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:prefixEditText:$projectVersionName")
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:emojiDisableEditText:$projectVersionName")
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:passwordEditText:$projectVersionName")
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:regexEditText:$projectVersionName")
+    implementation("com.github.FPhoenixCorneaE.CustomEditText:suffixEditText:$projectVersionName")
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
