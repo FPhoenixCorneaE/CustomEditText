@@ -253,6 +253,32 @@
                     android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="ContentDescriptionEditText"
+                    android:textColor="@android:color/black"
+                    android:textSize="16sp"
+                    tools:ignore="HardcodedText" />
+
+                <com.fphoenixcorneae.widget.edittext.contentdescription.ContentDescriptionEditText
+                    android:id="@+id/etContentDescription"
+                    contentDescriptionMarginEnd="@{8f}"
+                    contentDescriptionMarginStart="@{20f}"
+                    contentDescriptionTextColor="@{@android:color/holo_orange_dark}"
+                    contentDescriptionTextSize="@{20f}"
+                    isContentDescriptionTextFakeBold="@{true}"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="#888888"
+                    android:contentDescription="列车车次"
+                    android:gravity="center_vertical|end"
+                    android:hint="例:G1"
+                    android:textColor="@android:color/black"
+                    android:textColorHint="@android:color/darker_gray"
+                    android:textSize="16sp"
+                    tools:ignore="ContentDescription,HardcodedText,RtlSymmetry,TextContrastCheck" />
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
