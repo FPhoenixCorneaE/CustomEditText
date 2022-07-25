@@ -4,6 +4,8 @@
 
 [![](https://jitpack.io/v/FPhoenixCorneaE/CustomEditText.svg)](https://jitpack.io/#FPhoenixCorneaE/CustomEditText)
 
+![](https://github.com/FPhoenixCorneaE/CustomEditText/blob/main/images/pic_custom_edit_text.png)
+
 ### How to include it in your project:
 
 **Step 1.** Add the JitPack repository to your build file.
