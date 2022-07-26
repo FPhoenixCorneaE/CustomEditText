@@ -1,12 +1,11 @@
 package com.fphoenixcorneae.widget.edittext.password
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.content.res.Resources
-import android.graphics.Canvas
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Build
@@ -106,10 +105,34 @@ class PasswordEditText @JvmOverloads constructor(
     private var mPrefixIconTint = ColorStateList.valueOf(currentHintTextColor)
     private var mPrefixIconFocusTint = ColorStateList.valueOf(currentHintTextColor)
 
+    /** 底部分割线 */
+    private val mBottomLinePaint by lazy {
+        Paint(Paint.ANTI_ALIAS_FLAG).apply {
+            isAntiAlias = true
+            style = Paint.Style.STROKE
+            isDither = true
+        }
+    }
+    private val mBottomLinePath by lazy { Path() }
+    private val mBottomLineSegmentPath by lazy { Path() }
+    private val mBottomLinePathMeasure by lazy { PathMeasure() }
+    private val mBottomLineAnimator by lazy { ValueAnimator.ofFloat(0f, 1f) }
+    private var mBottomLineDuration = DEFAULT_BOTTOM_LINE_DURATION
+    private var mBottomLineAnimatedValue = 0f
+    private var mBottomLineHeight = DEFAULT_BOTTOM_LINE_HEIGHT
+    private var mBottomLineColor = currentHintTextColor
+    private var mBottomLineFocusColor = Color.CYAN
+    private var mIsBottomLineShow = false
+    private var mIsBottomLineAnimated = true
+
     init {
         setOnFocusChangeListener { _, b ->
             mHasFocus = b
-            setIconVisibility()
+            if (mIsBottomLineShow && mIsBottomLineAnimated) {
+                mBottomLineAnimator.start()
+            } else {
+                setIconVisibility()
+            }
             mOnFocusChanged?.invoke(this, b)
         }
         doAfterTextChanged {
@@ -120,6 +143,9 @@ class PasswordEditText @JvmOverloads constructor(
 
         // 设置paddingEnd
         setPaddingEnd()
+
+        // 底部分割线
+        setBottomLine()
     }
 
     override fun setEnabled(enabled: Boolean) {
@@ -132,6 +158,11 @@ class PasswordEditText @JvmOverloads constructor(
         setPwdTransformationMethod()
     }
 
+    override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
+        super.onSizeChanged(w, h, oldw, oldh)
+        setBottomLinePath(h, w)
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
         if (getPrefixIcon() != null) {
@@ -140,6 +171,23 @@ class PasswordEditText @JvmOverloads constructor(
             val top = (height - mPrefixIconSize).roundToInt().shr(1)
             // When the inputted content is too long, getScrollX()/getScrollY() can fix the offset.
             canvas?.drawBitmap(getPrefixIcon()!!, start.toFloat(), (top + scrollY).toFloat(), null)
+        }
+        // 绘制底部分割线
+        if (mIsBottomLineShow) {
+            if (mHasFocus) {
+                mBottomLinePaint.color = mBottomLineFocusColor
+                if (mIsBottomLineAnimated) {
+                    mBottomLineSegmentPath.rewind()
+                    val stopD = mBottomLinePathMeasure.length * mBottomLineAnimatedValue
+                    mBottomLinePathMeasure.getSegment(0f, stopD, mBottomLineSegmentPath, true)
+                    canvas?.drawPath(mBottomLineSegmentPath, mBottomLinePaint)
+                } else {
+                    canvas?.drawPath(mBottomLinePath, mBottomLinePaint)
+                }
+            } else {
+                mBottomLinePaint.color = mBottomLineColor
+                canvas?.drawPath(mBottomLinePath, mBottomLinePaint)
+            }
         }
         if (!mHasFocus) {
             return
@@ -192,6 +240,37 @@ class PasswordEditText @JvmOverloads constructor(
 
     private fun setIconVisibility() {
         invalidate()
+    }
+
+    /**
+     * 底部分割线
+     */
+    private fun setBottomLine() {
+        if (mIsBottomLineShow) {
+            background = null
+            mBottomLinePaint.strokeWidth = mBottomLineHeight
+            if (mIsBottomLineAnimated) {
+                mBottomLineAnimator.apply {
+                    duration = mBottomLineDuration
+                    removeAllUpdateListeners()
+                    addUpdateListener {
+                        mBottomLineAnimatedValue = it.animatedValue as Float
+                        invalidate()
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 底部分割线路径
+     */
+    private fun setBottomLinePath(h: Int, w: Int) {
+        if (mIsBottomLineShow) {
+            mBottomLinePath.moveTo(0f, h - mBottomLineHeight / 2)
+            mBottomLinePath.lineTo(w.toFloat(), h - mBottomLineHeight / 2)
+            mBottomLinePathMeasure.setPath(mBottomLinePath, false)
+        }
     }
 
     /**
@@ -543,6 +622,58 @@ class PasswordEditText @JvmOverloads constructor(
         }
     }
 
+    /**
+     * 底部分割线显示与否
+     */
+    fun setBottomLineShow(show: Boolean) = apply {
+        mIsBottomLineShow = show
+        setBottomLine()
+        invalidate()
+    }
+
+    /**
+     * 底部分割线是否执行动画
+     */
+    fun setBottomLineAnimated(animated: Boolean) = apply {
+        mIsBottomLineAnimated = animated
+        setBottomLine()
+    }
+
+    /**
+     * 设置底部分割线颜色
+     */
+    fun setBottomLineColor(color: Int) = apply {
+        mBottomLineColor = color
+        invalidate()
+    }
+
+    /**
+     * 设置底部分割线获焦后颜色
+     */
+    fun setBottomLineFocusColor(color: Int) = apply {
+        mBottomLineFocusColor = color
+        invalidate()
+    }
+
+    /**
+     * 设置底部分割线高度
+     * @param height dp value
+     */
+    fun setBottomLineHeight(height: Float) = apply {
+        mBottomLineHeight =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, height, Resources.getSystem().displayMetrics)
+        setBottomLine()
+        invalidate()
+    }
+
+    /**
+     * 设置底部分割线动画时长
+     */
+    fun setBottomLineDuration(duration: Long) = apply {
+        mBottomLineDuration = duration
+        setBottomLine()
+    }
+
     // ========================================public api end===========================================================
 
     companion object {
@@ -554,6 +685,9 @@ class PasswordEditText @JvmOverloads constructor(
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 20f, Resources.getSystem().displayMetrics)
         private val DEFAULT_CURSOR_WIDTH =
             TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 3f, Resources.getSystem().displayMetrics)
+        private val DEFAULT_BOTTOM_LINE_HEIGHT =
+            TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1f, Resources.getSystem().displayMetrics)
+        private const val DEFAULT_BOTTOM_LINE_DURATION = 250L
 
         private const val DOT = '\u2022'
 
